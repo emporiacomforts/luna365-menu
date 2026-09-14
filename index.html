@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0b10">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>LUNA 365 | Digital Menu</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +15,7 @@
     <style>
         :root {
             --bg-dark: #0a0b10;
-            --card-bg: rgba(22, 24, 35, 0.75);
+            --card-bg: rgba(22, 24, 35, 0.82);
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --neon-glow: rgba(212, 175, 55, 0.35);
@@ -24,6 +27,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -31,69 +35,81 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             background-image: 
-                radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
-                radial-gradient(circle at 80% 80%, rgba(100, 70, 200, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 85% 85%, rgba(100, 70, 200, 0.08) 0%, transparent 50%);
             overflow-x: hidden;
+            padding: 0;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         /* Header / Branding */
         header {
             text-align: center;
-            padding: 3rem 1.5rem 1.5rem;
+            padding: clamp(2rem, 6vh, 3.5rem) 1.25rem 1rem;
+            width: 100%;
         }
 
         .logo-title {
             font-family: 'Cinzel', serif;
-            font-size: 3rem;
+            font-size: clamp(2.2rem, 8vw, 3.4rem);
             font-weight: 800;
-            letter-spacing: 6px;
+            letter-spacing: clamp(4px, 1.5vw, 7px);
             background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 50%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 25px var(--neon-glow);
             text-transform: uppercase;
+            line-height: 1.15;
+            word-break: keep-all;
         }
 
         .tagline {
-            font-size: 0.95rem;
-            letter-spacing: 4px;
+            font-size: clamp(0.75rem, 2.8vw, 0.95rem);
+            letter-spacing: clamp(2.5px, 0.8vw, 4.5px);
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-top: 0.5rem;
+            margin-top: 0.6rem;
+            line-height: 1.4;
         }
 
         /* Card Container */
         .container {
             width: 100%;
             max-width: 960px;
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1.25rem 2rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            gap: 2rem;
             z-index: 1;
         }
 
         /* Menu Selection Cards */
         .menu-card {
             background: var(--card-bg);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            border-radius: 20px;
+            padding: 2.2rem 1.8rem;
             text-align: center;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(12px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
             display: flex;
             flex-direction: column;
             align-items: center;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .menu-card::before {
@@ -105,43 +121,51 @@
             height: 100%;
             background: radial-gradient(circle at center, rgba(212, 175, 55, 0.15), transparent 70%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.35s ease;
         }
 
         .menu-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: var(--gold);
-            box-shadow: 0 15px 35px var(--neon-glow);
+            box-shadow: 0 16px 36px var(--neon-glow);
         }
 
         .menu-card:hover::before {
             opacity: 1;
         }
 
+        .menu-card:active {
+            transform: scale(0.98);
+            border-color: var(--gold);
+            box-shadow: 0 6px 20px var(--neon-glow);
+        }
+
         /* SVG Icon Wrappers */
         .svg-icon-wrapper {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1.5rem;
+            width: 76px;
+            height: 76px;
+            margin-bottom: 1.3rem;
             border-radius: 50%;
             background: rgba(212, 175, 55, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.32);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.4s ease;
+            transition: all 0.35s ease;
+            flex-shrink: 0;
         }
 
-        .menu-card:hover .svg-icon-wrapper {
-            background: rgba(212, 175, 55, 0.15);
+        .menu-card:hover .svg-icon-wrapper,
+        .menu-card:active .svg-icon-wrapper {
+            background: rgba(212, 175, 55, 0.18);
             border-color: var(--gold);
-            box-shadow: 0 0 20px var(--neon-glow);
-            transform: scale(1.08);
+            box-shadow: 0 0 22px var(--neon-glow);
+            transform: scale(1.06);
         }
 
         .card-svg {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             stroke: var(--gold-light);
             fill: none;
             stroke-width: 1.6;
@@ -150,44 +174,52 @@
             transition: stroke 0.3s ease;
         }
 
-        .menu-card:hover .card-svg {
+        .menu-card:hover .card-svg,
+        .menu-card:active .card-svg {
             stroke: #ffffff;
         }
 
         .card-title {
             font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
+            font-size: clamp(1.4rem, 4.5vw, 1.65rem);
             font-weight: 700;
             letter-spacing: 2px;
             color: #ffffff;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.25;
         }
 
         .card-desc {
             font-size: 0.88rem;
             color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 1.8rem;
+            line-height: 1.55;
+            margin-bottom: 1.6rem;
             flex-grow: 1;
         }
 
         .btn-view {
-            display: inline-block;
-            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--bg-dark);
             background: linear-gradient(135deg, var(--gold-light), var(--gold));
-            padding: 0.8rem 1.8rem;
+            padding: 0.85rem 2rem;
             border-radius: 30px;
             border: none;
+            min-height: 46px;
+            min-width: 180px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            pointer-events: none;
         }
 
         .menu-card:hover .btn-view {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px var(--neon-glow);
+            transform: scale(1.04);
+            box-shadow: 0 0 20px var(--neon-glow);
         }
 
         /* Fullscreen PDF Viewer Modal */
@@ -197,10 +229,13 @@
             top: 0;
             left: 0;
             width: 100vw;
+            width: 100dvw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(8px);
-            z-index: 999;
+            height: 100dvh;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
             flex-direction: column;
         }
 
@@ -212,49 +247,104 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 1.5rem;
-            background: #11131a;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 0.85rem 1.25rem;
+            padding-top: max(0.85rem, env(safe-area-inset-top));
+            padding-left: max(1.25rem, env(safe-area-inset-left));
+            padding-right: max(1.25rem, env(safe-area-inset-right));
+            background: #0f1118;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            min-height: 60px;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
         .modal-title {
             font-family: 'Cinzel', serif;
             color: var(--gold-light);
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3.8vw, 1.25rem);
             letter-spacing: 1px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .modal-actions {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .action-btn {
-            background: transparent;
+            background: rgba(212, 175, 55, 0.1);
             border: 1px solid var(--gold);
             color: var(--gold-light);
-            padding: 0.4rem 0.9rem;
-            font-size: 0.8rem;
-            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 6px;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 40px;
+            touch-action: manipulation;
         }
 
-        .action-btn:hover {
+        .action-btn:hover,
+        .action-btn:active {
             background: var(--gold);
             color: var(--bg-dark);
         }
 
         .close-btn {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             cursor: pointer;
             line-height: 1;
-            padding: 0 0.4rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, transform 0.1s ease;
+            touch-action: manipulation;
+            flex-shrink: 0;
+        }
+
+        .close-btn:hover,
+        .close-btn:active {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: var(--gold);
+            transform: scale(0.95);
+        }
+
+        /* Mobile helper bar under header */
+        .mobile-notice-bar {
+            display: none;
+            background: rgba(22, 24, 35, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 0.55rem 1rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .mobile-notice-bar a {
+            color: var(--gold-light);
+            font-weight: 600;
+            text-decoration: underline;
+            white-space: nowrap;
         }
 
         .modal-body {
@@ -262,26 +352,138 @@
             width: 100%;
             height: 100%;
             position: relative;
+            background: #15161e;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Loading Spinner */
+        .pdf-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .spinner {
+            width: 42px;
+            height: 42px;
+            border: 3px solid rgba(212, 175, 55, 0.18);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .pdf-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
+            position: relative;
+            z-index: 2;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
+            padding: 1.8rem 1rem;
+            padding-bottom: max(1.8rem, env(safe-area-inset-bottom));
+            font-size: 0.78rem;
             color: #555b6e;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            width: 100%;
         }
 
         footer a {
             color: var(--gold);
             text-decoration: none;
+        }
+
+        /* Responsive Mobile Breakpoints */
+        @media (max-width: 768px) {
+            .container {
+                gap: 1.3rem;
+                padding: 1rem 1rem 1.8rem;
+                max-width: 440px;
+            }
+
+            .menu-card {
+                padding: 1.8rem 1.4rem;
+                border-radius: 18px;
+            }
+
+            .svg-icon-wrapper {
+                width: 68px;
+                height: 68px;
+                margin-bottom: 1rem;
+            }
+
+            .card-svg {
+                width: 34px;
+                height: 34px;
+            }
+
+            .card-desc {
+                font-size: 0.82rem;
+                margin-bottom: 1.3rem;
+            }
+
+            .btn-view {
+                width: 100%;
+                max-width: 220px;
+                padding: 0.75rem 1.5rem;
+                font-size: 0.78rem;
+                min-height: 42px;
+            }
+
+            .mobile-notice-bar {
+                display: flex;
+            }
+
+            .modal-actions .action-btn {
+                padding: 0.45rem 0.75rem;
+                font-size: 0.74rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            header {
+                padding: 1.8rem 0.75rem 0.8rem;
+            }
+            .container {
+                padding: 0.8rem 0.75rem 1.5rem;
+            }
+            .menu-card {
+                padding: 1.5rem 1rem;
+            }
+            .modal-header {
+                padding: 0.6rem 0.8rem;
+            }
+            .modal-title {
+                font-size: 0.95rem;
+            }
+            .action-btn span {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -333,11 +535,30 @@
         <div class="modal-header">
             <div class="modal-title" id="pdfTitle">Menu</div>
             <div class="modal-actions">
-                <a id="externalLink" href="#" target="_blank" class="action-btn">Open in New Tab</a>
-                <button class="close-btn" onclick="closePdfViewer()">&times;</button>
+                <a id="externalLink" href="#" target="_blank" class="action-btn" title="Open Fullscreen PDF">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>Open in New Tab</span>
+                </a>
+                <button class="close-btn" onclick="closePdfViewer()" aria-label="Close viewer">&times;</button>
             </div>
         </div>
+
+        <!-- Mobile Helper Bar -->
+        <div class="mobile-notice-bar">
+            <span>📱 Tip: For easy pinch-to-zoom:</span>
+            <a id="mobileDirectBtn" href="#" target="_blank">Open Fullscreen ↗</a>
+        </div>
+
+        <!-- Modal Body with Loader & Iframe -->
         <div class="modal-body">
+            <div class="pdf-loader" id="pdfLoader">
+                <div class="spinner"></div>
+                <span>Loading Menu...</span>
+            </div>
             <iframe id="pdfFrame" src="" title="PDF Viewer"></iframe>
         </div>
     </div>
@@ -353,11 +574,27 @@
         const pdfFrame = document.getElementById('pdfFrame');
         const pdfTitle = document.getElementById('pdfTitle');
         const externalLink = document.getElementById('externalLink');
+        const mobileDirectBtn = document.getElementById('mobileDirectBtn');
+        const pdfLoader = document.getElementById('pdfLoader');
 
         function openPdfViewer(pdfUrl, title) {
             pdfTitle.textContent = title;
-            pdfFrame.src = pdfUrl;
             externalLink.href = pdfUrl;
+            mobileDirectBtn.href = pdfUrl;
+
+            // Show loader while loading heavy PDFs
+            pdfLoader.classList.remove('hidden');
+            pdfFrame.src = pdfUrl;
+
+            pdfFrame.onload = function() {
+                pdfLoader.classList.add('hidden');
+            };
+
+            // Fallback timeout in case browser doesn't trigger iframe onload for PDFs
+            setTimeout(() => {
+                pdfLoader.classList.add('hidden');
+            }, 3000);
+
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -365,6 +602,7 @@
         function closePdfViewer() {
             modal.classList.remove('active');
             pdfFrame.src = '';
+            pdfLoader.classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
