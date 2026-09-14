@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUNA 365 | Digital Menu</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0a0b10;
+            --card-bg: rgba(22, 24, 35, 0.75);
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --neon-glow: rgba(212, 175, 55, 0.35);
+            --text-main: #f5f5f7;
+            --text-muted: #a0a5b5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(100, 70, 200, 0.05) 0%, transparent 50%);
+            overflow-x: hidden;
+        }
+
+        /* Header / Branding */
+        header {
+            text-align: center;
+            padding: 3rem 1.5rem 1.5rem;
+        }
+
+        .logo-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px var(--neon-glow);
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            letter-spacing: 4px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* Card Container */
+        .container {
+            width: 100%;
+            max-width: 960px;
+            padding: 2rem 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            z-index: 1;
+        }
+
+        /* Menu Selection Cards */
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 35px var(--neon-glow);
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        /* SVG Icon Wrappers */
+        .svg-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        .menu-card:hover .svg-icon-wrapper {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--neon-glow);
+            transform: scale(1.08);
+        }
+
+        .card-svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--gold-light);
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s ease;
+        }
+
+        .menu-card:hover .card-svg {
+            stroke: #ffffff;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.8rem;
+            flex-grow: 1;
+        }
+
+        .btn-view {
+            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--bg-dark);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .menu-card:hover .btn-view {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        /* Fullscreen PDF Viewer Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            flex-direction: column;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: #11131a;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            padding: 0.4rem 0.9rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 0.4rem;
+        }
+
+        .modal-body {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: #555b6e;
+            letter-spacing: 1px;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1 class="logo-title">LUNA 365</h1>
+        <p class="tagline">Where Night Meets Flavour</p>
+    </header>
+
+    <!-- Menu Cards -->
+    <main class="container">
+        <!-- Restobar Menu Card -->
+        <div class="menu-card" onclick="openPdfViewer('menu-pdfs/luna365-menu.pdf', 'Restobar Menu')">
+            <div class="svg-icon-wrapper">
+                <!-- Food / Cloche SVG -->
+                <svg class="card-svg" viewBox="0 0 24 24">
+                    <path d="M12 4a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1h-2V4z" />
+                    <path d="M4 17h16c.55 0 1-.45 1-1 0-4.97-4.03-9-9-9s-9 4.03-9 9c0 .55.45 1 1 1z" />
+                    <line x1="2" y1="20" x2="22" y2="20" stroke-width="2" />
+                </svg>
+            </div>
+            <h2 class="card-title">Restobar Menu</h2>
+            <p class="card-desc">Gourmet appetizers, signature main courses, and chef's curated delights.</p>
+            <span class="btn-view">View Menu</span>
+        </div>
+
+        <!-- Liquor Menu Card -->
+        <div class="menu-card" onclick="openPdfViewer('menu-pdfs/luna365-menu1.pdf', 'Liquor Menu')">
+            <div class="svg-icon-wrapper">
+                <!-- Cocktail / Martini Glass SVG -->
+                <svg class="card-svg" viewBox="0 0 24 24">
+                    <polygon points="5,4 19,4 12,13" />
+                    <line x1="12" y1="13" x2="12" y2="20" />
+                    <line x1="8" y1="20" x2="16" y2="20" />
+                    <line x1="7" y1="7" x2="17" y2="7" stroke-dasharray="1 1" />
+                    <circle cx="15" cy="5" r="1" fill="currentColor" />
+                </svg>
+            </div>
+            <h2 class="card-title">Liquor Menu</h2>
+            <p class="card-desc">Craft cocktails, imported spirits, fine wines, and premium draughts.</p>
+            <span class="btn-view">View Menu</span>
+        </div>
+    </main>
+
+    <!-- PDF Viewer Modal -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-header">
+            <div class="modal-title" id="pdfTitle">Menu</div>
+            <div class="modal-actions">
+                <a id="externalLink" href="#" target="_blank" class="action-btn">Open in New Tab</a>
+                <button class="close-btn" onclick="closePdfViewer()">&times;</button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <iframe id="pdfFrame" src="" title="PDF Viewer"></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; LUNA365.IN &bull; All Rights Reserved</p>
+    </footer>
+
+    <!-- Script to Handle PDF Loading -->
+    <script>
+        const modal = document.getElementById('pdfModal');
+        const pdfFrame = document.getElementById('pdfFrame');
+        const pdfTitle = document.getElementById('pdfTitle');
+        const externalLink = document.getElementById('externalLink');
+
+        function openPdfViewer(pdfUrl, title) {
+            pdfTitle.textContent = title;
+            pdfFrame.src = pdfUrl;
+            externalLink.href = pdfUrl;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePdfViewer() {
+            modal.classList.remove('active');
+            pdfFrame.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closePdfViewer();
+            }
+        });
+    </script>
+</body>
+</html>
